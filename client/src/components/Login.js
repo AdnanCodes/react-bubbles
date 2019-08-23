@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { axiosWithAuth } from "./axiosAuth";
 
-const Login = () => {
+const Login = props => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
   const [login, setLogin] = useState({
@@ -18,13 +18,13 @@ const Login = () => {
     e.preventDefault();
     console.log("Form entered this: ", login);
 
-    // axiosWithAuth()
-    //   .post(`http://localhost:5000/api/login`, login)
-    //   .then(res => {
-    //     localStorage.setItem("token", res.data.payload);
-    //     props.history.push("/friends");
-    //   })
-    //   .catch(err => console.log("Error in Login: ", err.response.data.error));
+    axiosWithAuth()
+      .post(`http://localhost:5000/api/login`, login)
+      .then(res => {
+        localStorage.setItem("token", res.data.payload);
+        props.history.push("/bubble");
+      })
+      .catch(err => console.log("Error in Login: ", err.response));
 
     setLogin({
       username: "",
